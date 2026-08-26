@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <meta
+        name="description"
+        content="Modern responsive calculator with scientific functions, memory, history and smartwatch support"
+    >
+
+    <title>Modern Calculator</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="app">
+
+        <section class="calculator" aria-label="Calculator">
+
+            <!-- =========================================
+                 HEADER
+            ========================================== -->
+
+            <header class="calculator-header">
+
+                <div class="brand">
+                    <div class="brand-icon" aria-hidden="true">
+                        ∑
+                    </div>
+
+                    <div>
+                        <h1>Calculator</h1>
+                        <p>Smart Calculator</p>
+                    </div>
+                </div>
+
+
+                <div class="header-actions">
+
+                    <button
+                        id="themeButton"
+                        class="icon-button"
+                        type="button"
+                        aria-label="Toggle dark mode"
+                        title="Toggle theme"
+                    >
+                        ☀
+                    </button>
+
+                    <button
+                        id="historyButton"
+                        class="icon-button"
+                        type="button"
+                        aria-label="Open calculation history"
+                        title="History"
+                    >
+                        ↺
+                    </button>
+
+                </div>
+
+            </header>
+
+
+            <!-- =========================================
+                 DISPLAY
+            ========================================== -->
+
+            <section
+                class="display"
+                aria-label="Calculator display"
+            >
+
+                <div
+                    id="memoryIndicator"
+                    class="memory-indicator"
+                    aria-live="polite"
+                >
+                    M
+                </div>
+
+                <div
+                    id="expressionDisplay"
+                    class="expression-display"
+                    aria-label="Current expression"
+                >
+                    0
+                </div>
+
+                <div
+                    id="resultDisplay"
+                    class="result-display"
+                    aria-live="polite"
+                    aria-atomic="true"
+                >
+                    0
+                </div>
+
+                <div
+                    id="statusMessage"
+                    class="status-message"
+                    aria-live="polite"
+                >
+                    Ready
+                </div>
+
+            </section>
+
+
+            <!-- =========================================
+                 MODE BAR
+            ========================================== -->
+
+            <div class="mode-bar">
+
+                <button
+                    id="basicMode"
+                    class="mode-button active"
+                    type="button"
+                >
+                    Basic
+                </button>
+
+                <button
+                    id="scientificMode"
+                    class="mode-button"
+                    type="button"
+                >
+                    Scientific
+                </button>
+
+            </div>
+
+
+            <!-- =========================================
+                 MEMORY BAR
+            ========================================== -->
+
+            <section
+                class="memory-bar"
+                aria-label="Memory functions"
+            >
+
+                <button
+                    class="memory-button"
+                    data-memory="clear"
+                    type="button"
+                    aria-label="Memory clear"
+                >
+                    MC
+                </button>
+
+                <button
+                    class="memory-button"
+                    data-memory="recall"
+                    type="button"
+                    aria-label="Memory recall"
+                >
+                    MR
+                </button>
+
+                <button
+                    class="memory-button"
+                    data-memory="add"
+                    type="button"
+                    aria-label="Memory add"
+                >
+                    M+
+                </button>
+
+                <button
+                    class="memory-button"
+                    data-memory="subtract"
+                    type="button"
+                    aria-label="Memory subtract"
+                >
+                    M−
+                </button>
+
+            </section>
+
+
+            <!-- =========================================
+                 SCIENTIFIC FUNCTIONS
+            ========================================== -->
+
+            <section
+                id="scientificPanel"
+                class="scientific-panel hidden"
+                aria-label="Scientific functions"
+            >
+                <button
+                   class="scientific-button"
+                   id="angleModeButton"
+                   type="button"
+                   aria-label="Toggle angle mode"
+                >
+                    DEG
+               </button>
+
+                <button
+                    class="scientific-button"
+                    data-scientific="sin"
+                    type="button"
+                    aria-label="Sine"
+                >
+                    sin
+                </button>
+
+                <button
+                    class="scientific-button"
+                    data-scientific="cos"
+                    type="button"
+                    aria-label="Cosine"
+                >
+                    cos
+                </button>
+
+                <button
+                    class="scientific-button"
+                    data-scientific="tan"
+                    type="button"
+                    aria-label="Tangent"
+                >
+                    tan
+                </button>
+
+                <button
+                    class="scientific-button"
+                    data-scientific="sqrt"
+                    type="button"
+                    aria-label="Square root"
+                >
+                    √
+                </button>
+
+                <button
+                    class="scientific-button"
+                    data-scientific="square"
+                    type="button"
+                    aria-label="Square"
+                >
+                    x²
+                </button>
+
+                <button
+                    class="scientific-button"
+                    data-scientific="power"
+                    type="button"
+                    aria-label="Power"
+                >
+                    xʸ
+                </button>
+
+                <button
+                    class="scientific-button"
+                    data-scientific="log"
+                    type="button"
+                    aria-label="Logarithm"
+                >
+                    log
+                </button>
+
+                <button
+                    class="scientific-button"
+                    data-scientific="ln"
+                    type="button"
+                    aria-label="Natural logarithm"
+                >
+                    ln
+                </button>
+
+                <button
+                    class="scientific-button"
+                    data-scientific="factorial"
+                    type="button"
+                    aria-label="Factorial"
+                >
+                    x!
+                </button>
+
+                <button
+                    class="scientific-button"
+                    data-scientific="reciprocal"
+                    type="button"
+                    aria-label="Reciprocal"
+                >
+                    1/x
+                </button>
+
+                <button
+                    class="scientific-button"
+                    data-scientific="pi"
+                    type="button"
+                    aria-label="Pi"
+                >
+                    π
+                </button>
+
+                <button
+                    class="scientific-button"
+                    data-scientific="e"
+                    type="button"
+                    aria-label="Euler's number"
+                >
+                    e
+                </button>
+
+                <button
+                    class="scientific-button"
+                    data-scientific="openParen"
+                    type="button"
+                    aria-label="Open parenthesis"
+                >
+                    (
+                </button>
+
+                <button
+                    class="scientific-button"
+                    data-scientific="closeParen"
+                    type="button"
+                    aria-label="Close parenthesis"
+                >
+                    )
+                </button>
+
+                <button
+                    class="scientific-button"
+                    data-scientific="ans"
+                    type="button"
+                    aria-label="Previous answer"
+                >
+                    Ans
+                </button>
+
+                <button
+                    class="scientific-button"
+                    data-scientific="toggleSign"
+                    type="button"
+                    aria-label="Toggle positive or negative"
+                >
+                    +/−
+                </button>
+
+            </section>
+
+
+            <!-- =========================================
+                 MAIN KEYPAD
+            ========================================== -->
+
+            <section
+                class="keypad"
+                aria-label="Calculator keypad"
+            >
+
+                <!-- Row 1 -->
+
+                <button
+                    class="calc-button function-button"
+                    data-action="clear"
+                    type="button"
+                    aria-label="Clear calculator"
+                >
+                    AC
+                </button>
+
+                <button
+                    class="calc-button function-button"
+                    data-action="delete"
+                    type="button"
+                    aria-label="Delete"
+                >
+                    DEL
+                </button>
+
+                <button
+                    class="calc-button function-button"
+                    data-action="percent"
+                    type="button"
+                    aria-label="Percentage"
+                >
+                    %
+                </button>
+
+                <button
+                    class="calc-button operator-button"
+                    data-operation="/"
+                    type="button"
+                    aria-label="Divide"
+                >
+                    ÷
+                </button>
+
+
+                <!-- Row 2 -->
+
+                <button
+                    class="calc-button number-button"
+                    data-number="7"
+                    type="button"
+                >
+                    7
+                </button>
+
+                <button
+                    class="calc-button number-button"
+                    data-number="8"
+                    type="button"
+                >
+                    8
+                </button>
+
+                <button
+                    class="calc-button number-button"
+                    data-number="9"
+                    type="button"
+                >
+                    9
+                </button>
+
+                <button
+                    class="calc-button operator-button"
+                    data-operation="*"
+                    type="button"
+                    aria-label="Multiply"
+                >
+                    ×
+                </button>
+
+
+                <!-- Row 3 -->
+
+                <button
+                    class="calc-button number-button"
+                    data-number="4"
+                    type="button"
+                >
+                    4
+                </button>
+
+                <button
+                    class="calc-button number-button"
+                    data-number="5"
+                    type="button"
+                >
+                    5
+                </button>
+
+                <button
+                    class="calc-button number-button"
+                    data-number="6"
+                    type="button"
+                >
+                    6
+                </button>
+
+                <button
+                    class="calc-button operator-button"
+                    data-operation="-"
+                    type="button"
+                    aria-label="Subtract"
+                >
+                    −
+                </button>
+
+
+                <!-- Row 4 -->
+
+                <button
+                    class="calc-button number-button"
+                    data-number="1"
+                    type="button"
+                >
+                    1
+                </button>
+
+                <button
+                    class="calc-button number-button"
+                    data-number="2"
+                    type="button"
+                >
+                    2
+                </button>
+
+                <button
+                    class="calc-button number-button"
+                    data-number="3"
+                    type="button"
+                >
+                    3
+                </button>
+
+                <button
+                    class="calc-button operator-button"
+                    data-operation="+"
+                    type="button"
+                    aria-label="Add"
+                >
+                    +
+                </button>
+
+
+                <!-- Row 5 -->
+
+                <button
+                    class="calc-button function-button"
+                    data-action="toggle-sign"
+                    type="button"
+                    aria-label="Change sign"
+                >
+                    +/−
+                </button>
+
+                <button
+                    class="calc-button number-button"
+                    data-number="0"
+                    type="button"
+                >
+                    0
+                </button>
+
+                <button
+                    class="calc-button number-button"
+                    data-action="decimal"
+                    type="button"
+                    aria-label="Decimal point"
+                >
+                    .
+                </button>
+
+                <button
+                    class="calc-button equals-button"
+                    data-action="equals"
+                    type="button"
+                    aria-label="Calculate result"
+                >
+                    =
+                </button>
+
+            </section>
+
+
+            <!-- =========================================
+                 QUICK ACTIONS
+            ========================================== -->
+
+            <div class="quick-actions">
+
+                <button
+                    id="copyResult"
+                    type="button"
+                >
+                    Copy Result
+                </button>
+
+                <button
+                    id="clearAllHistory"
+                    type="button"
+                >
+                    Clear History
+                </button>
+
+            </div>
+
+
+            <!-- =========================================
+                 KEYBOARD HELP
+            ========================================== -->
+
+            <footer class="calculator-footer">
+
+                <span>
+                    Keyboard supported
+                </span>
+
+                <span class="keyboard-shortcut">
+                    Enter = =
+                </span>
+
+                <span class="keyboard-shortcut">
+                    Esc = Clear
+                </span>
+
+            </footer>
+
+        </section>
+
+
+        <!-- =========================================
+             HISTORY DRAWER
+        ========================================== -->
+
+        <aside
+            id="historyPanel"
+            class="history-panel"
+            aria-label="Calculation history"
+            aria-hidden="true"
+        >
+
+            <div class="history-header">
+
+                <div>
+                    <h2>History</h2>
+
+                    <p>
+                        Your recent calculations
+                    </p>
+                </div>
+
+                <button
+                    id="closeHistory"
+                    class="close-button"
+                    type="button"
+                    aria-label="Close history"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div
+                id="historyList"
+                class="history-list"
+            >
+            </div>
+
+        </aside>
+
+    </main>
+
+
+    <!-- =========================================
+         TOAST
+    ========================================== -->
+
+    <div
+        id="toast"
+        class="toast"
+        role="status"
+        aria-live="polite"
+    >
+        Copied
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>

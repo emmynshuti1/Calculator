@@ -1,0 +1,1298 @@
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+:root {
+
+    --background: #eef2f7;
+
+    --calculator: #ffffff;
+
+    --display: #f7f9fc;
+
+    --button: #f0f3f7;
+
+    --button-hover: #e5e9ef;
+
+    --text: #172033;
+
+    --muted: #7b8496;
+
+    --border: #dfe4ec;
+
+    --operator: #e7edff;
+
+    --operator-text: #315fe8;
+
+    --function: #e9edf3;
+
+    --scientific: #edf1f8;
+
+    --equals: #3366ff;
+
+    --equals-hover: #2455df;
+
+    --danger: #ffe9e9;
+
+    --danger-text: #d83c3c;
+
+    --shadow: rgba(24, 39, 75, 0.13);
+
+    --history: #ffffff;
+
+    --toast: #172033;
+}
+
+
+body.dark {
+
+    --background: #0c1017;
+
+    --calculator: #171d27;
+
+    --display: #10151d;
+
+    --button: #242b36;
+
+    --button-hover: #303846;
+
+    --text: #f5f7fb;
+
+    --muted: #929bad;
+
+    --border: #303846;
+
+    --operator: #202f55;
+
+    --operator-text: #82a1ff;
+
+    --function: #282f3a;
+
+    --scientific: #222a35;
+
+    --equals: #4b70ff;
+
+    --equals-hover: #6687ff;
+
+    --danger: #44282c;
+
+    --danger-text: #ff9292;
+
+    --shadow: rgba(0, 0, 0, 0.4);
+
+    --history: #171d27;
+
+    --toast: #f5f7fb;
+}
+
+
+/* =====================================================
+   BODY
+===================================================== */
+
+html {
+    min-height: 100%;
+}
+
+
+body {
+
+    min-height: 100vh;
+
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: var(--background);
+
+    color: var(--text);
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease;
+
+    overflow-x: hidden;
+}
+
+
+button {
+
+    font-family: inherit;
+}
+
+
+/* =====================================================
+   APP
+===================================================== */
+
+.app {
+
+    width: 100%;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 30px;
+
+    position: relative;
+}
+
+
+/* =====================================================
+   CALCULATOR
+===================================================== */
+
+.calculator {
+
+    width: min(100%, 460px);
+
+    background: var(--calculator);
+
+    border: 1px solid var(--border);
+
+    border-radius: 30px;
+
+    padding: 24px;
+
+    box-shadow:
+        0 25px 70px var(--shadow);
+
+    transition:
+        background 0.3s ease,
+        transform 0.2s ease;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.calculator-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.brand-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border-radius: 13px;
+
+    background: var(--operator);
+
+    color: var(--operator-text);
+
+    font-size: 21px;
+
+    font-weight: 700;
+}
+
+
+.brand h1 {
+
+    font-size: 20px;
+
+    line-height: 1.2;
+}
+
+
+.brand p {
+
+    margin-top: 3px;
+
+    font-size: 12px;
+
+    color: var(--muted);
+}
+
+
+.header-actions {
+
+    display: flex;
+
+    gap: 8px;
+}
+
+
+.icon-button {
+
+    width: 42px;
+
+    height: 42px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 50%;
+
+    background: var(--button);
+
+    color: var(--text);
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    transition: 0.2s;
+}
+
+
+.icon-button:hover {
+
+    background: var(--button-hover);
+
+    transform: translateY(-2px);
+}
+
+
+.icon-button:active {
+
+    transform: scale(0.92);
+}
+
+
+/* =====================================================
+   DISPLAY
+===================================================== */
+
+.display {
+
+    min-height: 155px;
+
+    padding: 20px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 22px;
+
+    background: var(--display);
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-end;
+
+    position: relative;
+
+    overflow: hidden;
+
+    margin-bottom: 15px;
+}
+
+
+.memory-indicator {
+
+    position: absolute;
+
+    top: 15px;
+
+    left: 17px;
+
+    display: none;
+
+    color: var(--operator-text);
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+.memory-indicator.visible {
+
+    display: block;
+}
+
+
+.expression-display {
+
+    min-height: 24px;
+
+    color: var(--muted);
+
+    text-align: right;
+
+    font-size: 15px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    margin-bottom: 5px;
+}
+
+
+.result-display {
+
+    text-align: right;
+
+    font-size: clamp(34px, 9vw, 48px);
+
+    line-height: 1.15;
+
+    font-weight: 650;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    letter-spacing: -1px;
+}
+
+
+.status-message {
+
+    text-align: right;
+
+    min-height: 17px;
+
+    margin-top: 5px;
+
+    font-size: 11px;
+
+    color: var(--muted);
+}
+
+
+/* =====================================================
+   MODE BAR
+===================================================== */
+
+.mode-bar {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 5px;
+
+    padding: 4px;
+
+    margin-bottom: 10px;
+
+    border-radius: 13px;
+
+    background: var(--display);
+
+    border: 1px solid var(--border);
+}
+
+
+.mode-button {
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: transparent;
+
+    color: var(--muted);
+
+    padding: 9px;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+
+.mode-button.active {
+
+    background: var(--calculator);
+
+    color: var(--text);
+
+    box-shadow:
+        0 2px 7px var(--shadow);
+}
+
+
+/* =====================================================
+   MEMORY
+===================================================== */
+
+.memory-bar {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 7px;
+
+    margin-bottom: 10px;
+}
+
+
+.memory-button {
+
+    border: 1px solid var(--border);
+
+    background: var(--function);
+
+    color: var(--muted);
+
+    border-radius: 10px;
+
+    padding: 8px 4px;
+
+    cursor: pointer;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    transition: 0.2s;
+}
+
+
+.memory-button:hover {
+
+    background: var(--button-hover);
+
+    color: var(--text);
+}
+
+
+/* =====================================================
+   SCIENTIFIC PANEL
+===================================================== */
+
+.scientific-panel {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 7px;
+
+    margin-bottom: 10px;
+
+    max-height: 400px;
+
+    opacity: 1;
+
+    overflow: hidden;
+
+    transition:
+        max-height 0.3s ease,
+        opacity 0.3s ease;
+}
+
+
+.scientific-panel.hidden {
+
+    max-height: 0;
+
+    opacity: 0;
+
+    margin-bottom: 0;
+}
+
+
+.scientific-button {
+
+    min-height: 42px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 11px;
+
+    background: var(--scientific);
+
+    color: var(--text);
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition: 0.15s;
+}
+
+
+.scientific-button:hover {
+
+    background: var(--button-hover);
+
+    transform: translateY(-1px);
+}
+
+
+.scientific-button:active {
+
+    transform: scale(0.95);
+}
+
+
+/* =====================================================
+   KEYPAD
+===================================================== */
+
+.keypad {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 10px;
+}
+
+
+.calc-button {
+
+    min-width: 0;
+
+    height: 66px;
+
+    border: none;
+
+    border-radius: 17px;
+
+    background: var(--button);
+
+    color: var(--text);
+
+    cursor: pointer;
+
+    font-size: 20px;
+
+    font-weight: 600;
+
+    user-select: none;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        background 0.15s ease,
+        transform 0.1s ease;
+}
+
+
+.calc-button:hover {
+
+    background: var(--button-hover);
+
+    transform: translateY(-2px);
+}
+
+
+.calc-button:active {
+
+    transform: scale(0.94);
+}
+
+
+.calc-button:focus-visible,
+.memory-button:focus-visible,
+.scientific-button:focus-visible,
+.mode-button:focus-visible,
+.icon-button:focus-visible {
+
+    outline: 3px solid var(--operator-text);
+
+    outline-offset: 2px;
+}
+
+
+.number-button {
+
+    background: var(--button);
+}
+
+
+.function-button {
+
+    background: var(--function);
+
+    color: var(--muted);
+
+    font-size: 14px;
+}
+
+
+.operator-button {
+
+    background: var(--operator);
+
+    color: var(--operator-text);
+
+    font-size: 25px;
+}
+
+
+.operator-button:hover {
+
+    background: var(--operator);
+
+    filter: brightness(0.96);
+}
+
+
+.equals-button {
+
+    background: var(--equals);
+
+    color: white;
+
+    font-size: 25px;
+
+    box-shadow:
+        0 8px 20px rgba(51, 102, 255, 0.23);
+}
+
+
+.equals-button:hover {
+
+    background: var(--equals-hover);
+}
+
+
+/* =====================================================
+   QUICK ACTIONS
+===================================================== */
+
+.quick-actions {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-top: 14px;
+}
+
+
+.quick-actions button {
+
+    flex: 1;
+
+    border: none;
+
+    background: transparent;
+
+    color: var(--operator-text);
+
+    cursor: pointer;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    padding: 7px;
+}
+
+
+.quick-actions button:hover {
+
+    text-decoration: underline;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.calculator-footer {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    margin-top: 15px;
+
+    padding-top: 13px;
+
+    border-top: 1px solid var(--border);
+}
+
+
+.keyboard-shortcut {
+
+    padding: 3px 6px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 5px;
+}
+
+
+/* =====================================================
+   HISTORY PANEL
+===================================================== */
+
+.history-panel {
+
+    position: fixed;
+
+    top: 0;
+
+    right: -390px;
+
+    width: min(390px, 100%);
+
+    height: 100vh;
+
+    z-index: 20;
+
+    padding: 25px;
+
+    background: var(--history);
+
+    border-left: 1px solid var(--border);
+
+    box-shadow:
+        -20px 0 50px var(--shadow);
+
+    transition: right 0.3s ease;
+
+    overflow-y: auto;
+}
+
+
+.history-panel.open {
+
+    right: 0;
+}
+
+
+.history-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+
+.history-header h2 {
+
+    font-size: 21px;
+}
+
+
+.history-header p {
+
+    margin-top: 5px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+
+.close-button {
+
+    width: 38px;
+
+    height: 38px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: var(--button);
+
+    color: var(--text);
+
+    font-size: 25px;
+
+    cursor: pointer;
+}
+
+
+.history-list {
+
+    padding-top: 10px;
+}
+
+
+.history-empty {
+
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    padding: 40px 10px;
+}
+
+
+.history-item {
+
+    padding: 15px 0;
+
+    border-bottom: 1px solid var(--border);
+
+    cursor: pointer;
+}
+
+
+.history-item:hover {
+
+    opacity: 0.75;
+}
+
+
+.history-expression {
+
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    margin-bottom: 5px;
+}
+
+
+.history-result {
+
+    display: block;
+
+    color: var(--text);
+
+    font-size: 20px;
+
+    font-weight: 650;
+}
+
+
+.history-time {
+
+    display: block;
+
+    margin-top: 5px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+.toast {
+
+    position: fixed;
+
+    left: 50%;
+
+    bottom: 25px;
+
+    z-index: 50;
+
+    transform:
+        translate(-50%, 100px);
+
+    padding: 10px 17px;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color: #111827;
+
+    font-size: 12px;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        transform 0.25s ease,
+        opacity 0.25s ease;
+}
+
+
+.toast.show {
+
+    transform:
+        translate(-50%, 0);
+
+    opacity: 1;
+}
+
+body.dark .toast {
+    color: #ffffff;
+    background: #1f2937;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .app {
+
+        padding: 12px;
+
+        align-items: flex-start;
+    }
+
+
+    .calculator {
+
+        margin-top: 5px;
+
+        padding: 16px;
+
+        border-radius: 23px;
+    }
+
+
+    .calculator-header {
+
+        margin-bottom: 14px;
+    }
+
+
+    .display {
+
+        min-height: 130px;
+
+        padding: 16px;
+
+        border-radius: 18px;
+    }
+
+
+    .calc-button {
+
+        height: 60px;
+
+        border-radius: 15px;
+    }
+
+
+    .keypad {
+
+        gap: 8px;
+    }
+
+
+    .scientific-panel {
+
+        gap: 6px;
+    }
+
+
+    .scientific-button {
+
+        min-height: 38px;
+
+        font-size: 12px;
+    }
+
+}
+
+
+/* =====================================================
+   VERY SMALL / SMARTWATCH MODE
+===================================================== */
+
+@media (max-width: 330px) {
+
+    .app {
+
+        padding: 4px;
+
+        align-items: center;
+    }
+
+
+    .calculator {
+
+        width: 100%;
+
+        padding: 9px;
+
+        border-radius: 18px;
+
+        box-shadow: none;
+    }
+
+
+    .calculator-header {
+
+        margin-bottom: 8px;
+    }
+
+
+    .brand-icon {
+
+        width: 29px;
+
+        height: 29px;
+
+        border-radius: 9px;
+
+        font-size: 15px;
+    }
+
+
+    .brand h1 {
+
+        font-size: 14px;
+    }
+
+
+    .brand p {
+
+        display: none;
+    }
+
+
+    .header-actions {
+
+        gap: 4px;
+    }
+
+
+    .icon-button {
+
+        width: 30px;
+
+        height: 30px;
+
+        font-size: 13px;
+    }
+
+
+    .display {
+
+        min-height: 92px;
+
+        padding: 10px;
+
+        margin-bottom: 7px;
+
+        border-radius: 13px;
+    }
+
+
+    .expression-display {
+
+        font-size: 10px;
+
+        min-height: 15px;
+    }
+
+
+    .result-display {
+
+        font-size: 27px;
+    }
+
+
+    .status-message {
+
+        font-size: 8px;
+
+        min-height: 11px;
+    }
+
+
+    .mode-bar {
+
+        margin-bottom: 6px;
+
+        padding: 2px;
+
+        border-radius: 8px;
+    }
+
+
+    .mode-button {
+
+        padding: 5px;
+
+        font-size: 9px;
+    }
+
+
+    .memory-bar {
+
+        gap: 4px;
+
+        margin-bottom: 6px;
+    }
+
+
+    .memory-button {
+
+        padding: 5px 2px;
+
+        font-size: 8px;
+
+        border-radius: 7px;
+    }
+
+
+    .keypad {
+
+        gap: 5px;
+    }
+
+
+    .calc-button {
+
+        height: 43px;
+
+        border-radius: 10px;
+
+        font-size: 16px;
+    }
+
+
+    .operator-button,
+    .equals-button {
+
+        font-size: 19px;
+    }
+
+
+    .function-button {
+
+        font-size: 9px;
+    }
+
+
+    .scientific-panel {
+
+        grid-template-columns:
+            repeat(4, 1fr);
+
+        gap: 4px;
+
+        margin-bottom: 6px;
+    }
+
+
+    .scientific-button {
+
+        min-height: 28px;
+
+        border-radius: 7px;
+
+        font-size: 8px;
+    }
+
+
+    .quick-actions {
+
+        margin-top: 6px;
+
+        gap: 4px;
+    }
+
+
+    .quick-actions button {
+
+        font-size: 8px;
+
+        padding: 3px;
+    }
+
+
+    .calculator-footer {
+
+        display: none;
+    }
+
+}
+
+
+/* =====================================================
+   REDUCED MOTION
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        scroll-behavior: auto !important;
+
+        transition-duration: 0.01ms !important;
+
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+    }
+
+}
